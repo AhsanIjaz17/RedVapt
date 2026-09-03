@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #EE4344;
+  --background: #06080d;
+  --foreground: #f8fafc;
+  --ws-canvas: #080a0c;
+  --ws-surface: #0c1014;
+  --ws-raised: #111820;
+  --ws-border: #1e2936;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}

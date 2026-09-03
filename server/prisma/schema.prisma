@@ -1,0 +1,140 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String            @id @default(uuid()) @db.Uuid
+  email            String            @unique
+  password_hash    String?
+  name             String?
+  auth_provider          String            @default("local") // local or google
+  google_id              String?           @unique
+  is_verified            Boolean           @default(false)
+  created_at             DateTime          @default(now())
+  
+  workspaces_owned Workspace[]       @relation("WorkspaceOwner")
+  memberships      WorkspaceMember[]
+  refresh_tokens   RefreshToken[]
+  scans            Scan[]
+}
+
+model Workspace {
+  id             String            @id @default(uuid()) @db.Uuid
+  name           String
+  owner_user_id  String            @db.Uuid
+  created_at     DateTime          @default(now())
+  
+  owner          User              @relation("WorkspaceOwner", fields: [owner_user_id], references: [id])
+  members        WorkspaceMember[]
+  scans          Scan[]
+  reports        Report[]
+  evidence_items EvidenceItem[]
+  finding_mappings FindingMapping[]
+}
+
+model WorkspaceMember {
+  id           String    @id @default(uuid()) @db.Uuid
+  workspace_id String    @db.Uuid
+  user_id      String    @db.Uuid
+  role         String    @default("member") // owner, admin, member
+  joined_at    DateTime  @default(now())
+  
+  workspace    Workspace @relation(fields: [workspace_id], references: [id])
+  user         User      @relation(fields: [user_id], references: [id])
+  
+  @@unique([workspace_id, user_id])
+}
+
+model RefreshToken {
+  id          String   @id @default(uuid()) @db.Uuid
+  user_id     String   @db.Uuid
+  token_hash  String
+  expires_at  DateTime
+  created_at  DateTime @default(now())
+  
+  user        User     @relation(fields: [user_id], references: [id])
+}
+
+model DemoRequest {
+  id             String   @id @default(uuid()) @db.Uuid
+  name           String
+  email          String
+  company        String
+  preferred_date DateTime
+  message        String?
+  ip_address     String?
+  user_agent     String?
+  created_at     DateTime @default(now())
+}
+
+model Scan {
+  id                 String    @id @default(uuid()) @db.Uuid
+  workspace_id       String    @db.Uuid
+  target_url         String
+  scan_type          String
+  status             String    @default("pending") // pending, running, completed, failed
+  created_by_user_id String    @db.Uuid
+  created_at         DateTime  @default(now())
+  
+  workspace          Workspace @relation(fields: [workspace_id], references: [id])
+  creator            User      @relation(fields: [created_by_user_id], references: [id])
+  reports            Report[]
+  checkpoint_data    Json?
+}
+
+model Report {
+  id           String    @id @default(uuid()) @db.Uuid
+  scan_id      String    @db.Uuid
+  workspace_id String    @db.Uuid
+  report_json  Json?
+  report_path  String?
+  created_at   DateTime  @default(now())
+  
+  scan         Scan      @relation(fields: [scan_id], references: [id])
+  workspace    Workspace @relation(fields: [workspace_id], references: [id])
+  evidence     EvidenceItem[]
+  mappings     FindingMapping[]
+}
+
+model FindingMapping {
+  id                 String   @id @default(uuid()) @db.Uuid
+  finding_id         String   // RV-001 or UUID
+  report_id          String   @db.Uuid
+  workspace_id       String   @db.Uuid
+  cwe_id             String?
+  attack_id          String?
+  cve_id             String?
+  mapping_confidence Float    @default(1.0)
+  mapping_method     String   @default("static_rules")
+  details            Json?    // Stores full mapping objects for CWE, ATTACK, etc.
+  created_at         DateTime @default(now())
+
+  report             Report    @relation(fields: [report_id], references: [id])
+  workspace          Workspace @relation(fields: [workspace_id], references: [id])
+}
+
+model EvidenceItem {
+  id               String   @id @default(uuid()) @db.Uuid
+  report_id        String   @db.Uuid
+  workspace_id     String   @db.Uuid
+  finding_index    Int
+  raw_request      String?  @db.Text
+  raw_response     String?  @db.Text
+  screenshot_b64   String?  @db.Text
+  dom_proof        String?  @db.Text
+  extracted_tokens Json?
+  har_data         Json?
+  timeline_logs    Json?
+  poc_steps        Json?
+  created_at       DateTime @default(now())
+
+  report           Report    @relation(fields: [report_id], references: [id])
+  workspace        Workspace @relation(fields: [workspace_id], references: [id])
+}

@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Generated report and scan evidence data (runtime-generated files)
+server/data/reports/
+server/data/evidence/
+server/data/cache/
+
+# Scratch & temporary workspace files
+scratch/
+*/scratch/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+Thumbs.db
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+redvapt.db*
+
+# Testing & Coverage
+coverage/
+

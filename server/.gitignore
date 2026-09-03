@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Runtime generated scanner data
+data/reports/
+data/evidence/
+data/cache/
+scratch/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+redvapt.db*
+
+# Generated Prisma files
+/src/generated/prisma
+

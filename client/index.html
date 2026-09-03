@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RedVapt | AI-Powered Penetration Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                DEFAULT: '#EE4344',
+                foreground: '#0c0a09',
+                muted: '#261617',
+              },
+            },
+            boxShadow: {
+              brand: '0 10px 40px -10px rgba(238, 67, 68, 0.35)',
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brand: #EE4344;
+        --background: #06080d;
+        --foreground: #f8fafc;
+        --ws-canvas: #080a0c;
+        --ws-surface: #0c1014;
+        --ws-raised: #111820;
+        --ws-border: #1e2936;
+        --ws-muted: #64748b;
+      }
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, sans-serif;
+        background-color: var(--background);
+        color: var(--foreground);
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-display {
+        font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+        font-optical-sizing: auto;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      ::selection {
+        background-color: rgba(238, 67, 68, 0.28);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
