@@ -1,6 +1,5 @@
 # RedVapt — AI-Powered Penetration Testing Platform
-<img width="976" height="976" alt="redvapt logo" src="https://github.com/user-attachments/assets/12d781d1-b37f-497e-93db-fc5c91663734" />
-
+<img width="300" height="300" alt="RedVapt logo" src="https://github.com/user-attachments/assets/12d781d1-b37f-497e-93db-fc5c91663734" />
 
 RedVapt is an autonomous AI-guided penetration testing platform that combines multi-source CLI reconnaissance with a Model Context Protocol (MCP) architecture, a ReAct-style LLM exploitation agent, and comprehensive HTML report generation.
 
