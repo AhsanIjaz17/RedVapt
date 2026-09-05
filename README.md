@@ -53,10 +53,11 @@ npm run install:all
 
 ### 2. Configure Environment
 
-Copy `.env.example` to `.env` (if not already present) and fill in your OpenRouter API key:
+Copy `.env.example` to `.env` (if not already present) and fill your API keys:
 
 ```bash
 OPENROUTER_API_KEY=your_openrouter_key
+Anthropic_API_key=your_anthropic_key
 ```
 
 ### 3. Start Development
